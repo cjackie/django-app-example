@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="col-md-12">
+	<form class="form-horizontal" action="/eft/login" method="POST">
+	  <fieldset>
+	    <div class="form-group">
+	      <label for="username" class="col-md-2 control-label">Username</label>
+
+	      <div class="col-md-10">
+	        <input type="text" class="form-control" name="username" id="username">
+	      </div>
+	    </div>
+
+	    <div class="form-group">
+	      <label for="password" class="col-md-2 control-label">Password</label>
+
+	      <div class="col-md-10">
+	        <input type="password" class="form-control" name="password" id="password">
+	      </div>
+	    </div>
+
+	    <div class="form-group">
+       		<div class="col-md-10 col-md-offset-2">
+        		<button type="submit" class="btn btn-default">Login</button>
+        		<a href="/eft/register" class="btn btn-default">Sign Up</a>
+      		</div>
+    	</div>
+	  </fieldset>
+	</form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'etf/hello.js' %}"></script>
+{% endblock %}

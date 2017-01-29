@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Orbisfn Systems</title>
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/css/bootstrap-material-design.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/css/ripples.min.css' %}">
+
+    <script type="text/javascript" src="{% static 'lib/js/jquery.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/js/underscore.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/js/bootstrap.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/js/material.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/js/ripples.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/js/react.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/js/react-dom.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/js/Flux.js' %}" ></script>
+
+</head>
+
+<body>
+
+{% block content %}
+
+{% endblock %}
+   
+</body>
+
+
+{% block scripts %}
+
+{% endblock %}
+
+<script type="text/javascript">
+    $.material.init()
+</script>
+</html>
