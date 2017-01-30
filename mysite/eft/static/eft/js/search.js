@@ -70,39 +70,47 @@ class Search extends React.Component {
 	}
 
 	search() {
-		// var url = 'geteft';
-		// var symbol = this.state['currentSymbol'];
-		// $.ajax(url, {
-		// 	'context': this,
-		// 	'contentType': 'application/json',
-		//       	'dataType': 'json',
-		//       	'data': {'symbol': symbol}
-		// }).done(function(data, textStatus, jqxhr) {
-		// 	if (jqxhr.status == 200) {
-		// 		this.
-		// 	} else if (jqxhr.status == 400) {
-		// 		showMessage('fail1');
-		// 	}
-		// }).fail(function() {
-		// 	showMessage('fail2');
-		// });
-
 		var symbol = this.state['searchText'];
 		var etf = this.state['etf'];
-		if (symbol != 'DGT') {
-			showMessage('symbol not found');
-		}
 
 		if (_.has(etf, symbol)) {
-			// already there
+			this.setState({
+				'currentSymbol': symbol
+			});
 			return;
 		}
 
 		// search via ajax
-		etf[symbol] = dummyData;
-		this.setState({
-			'etf': etf,
-			'currentSymbol': symbol
+		var url = 'api/search';
+		$.ajax(url, {
+			'context': this,
+			'contentType': 'application/json',
+			'dataType': 'json',
+			'data': { 'symbol': symbol }
+		}).done(function (data, textStatus, jqxhr) {
+			if (jqxhr.status == 200) {
+				var etf = this.state['etf'];
+				etf[data['symbol']] = data;
+				this.setState({
+					'currentSymbol': data['symbol'],
+					'etf': etf
+				});
+			} else if (jqxhr.status == 400) {
+				showMessage('fail1');
+				this.setState({
+					'currentSymbol': ''
+				});
+			} else {
+				showMessage('fail2');
+				this.setState({
+					'currentSymbol': ''
+				});
+			}
+		}).fail(function () {
+			showMessage('server encountered an error');
+			this.setState({
+				'currentSymbol': ''
+			});
 		});
 	}
 
@@ -114,12 +122,9 @@ class Search extends React.Component {
 		var currentSymbol = this.state['currentSymbol'];
 		var etf = this.state['etf'];
 		var searchText = this.state['searchText'];
+		var waiting = this.state['waiting'];
 
-		var dataView = React.createElement(
-			'div',
-			null,
-			'hi'
-		);
+		var dataView = React.createElement('div', null);
 		if (currentSymbol != '' && _.has(etf, currentSymbol)) {
 			var data = etf[currentSymbol];
 

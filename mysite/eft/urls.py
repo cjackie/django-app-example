@@ -10,4 +10,7 @@ urlpatterns = [
     url(r'^logout$', views.logout),
     url(r'^history$', views.history, name='history'),
     url(r'^search$', views.search, name='search'),
+
+    # ajax
+    url(r'^api/search$', views._search, name='api_search'),
 ]

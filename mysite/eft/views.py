@@ -5,6 +5,8 @@ import django.contrib.auth as auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from apps import EftConfig
+from . import models as etf_models
+import json
 
 def index(request):
 	return render(request, 'index.html', {})
@@ -84,3 +86,72 @@ def history(request):
 	return render(request, 'history.html')
 
 
+
+### ajax apis #######
+@login_required
+def _search(request):
+	'''
+	data format example: {'symbol': 'DTS'}
+	'''
+	if 'GET' != request.method or not request.is_ajax():
+		return HttpResponse(json.dumps({'error': 'bad header'}), status=404,
+		content_type='application/json')
+
+	try :
+		# TODO validate the data, 
+		symbol = request.GET['symbol']
+		data = etf_models.EtfRecord.objects.filter(symbol=symbol)
+		if (len(data) > 0):
+			# no need to query again.
+			record = data[0]
+		else:
+			# TODO
+			# parse info from the web
+			record = None
+
+			raise Exception('parse from web is not implemented yet.')
+	except Exception as error:
+		return HttpResponse(json.dumps({'error': str(error)}), 
+			content_type='application/json', status=400)
+
+	# construct response
+	response_data = {}
+	response_data['fund_description'] = record.fund_description
+	response_data['etf_name'] = record.fund_description
+	response_data['symbol'] = symbol
+
+	top_10_holdings = []
+	for h in record.holding_set.all():
+		top_10_holdings.append({
+			'name': h.name,
+			'weight': h.weight,
+			'shares': h.shares
+		})
+
+	country_weights = []
+	for w in record.countryweights_set.all():
+		country_weights.append({
+			'country': w.country,
+			'weight': w.weight
+		})
+
+	sector_weights = []
+	for w in record.sectorweights_set.all():
+		sector_weights.append({
+			'sector': w.sector,
+			'weight': w.weight
+		})
+
+	response_data['top_10_holdings'] = top_10_holdings
+	response_data['country_weights'] = country_weights
+	response_data['sector_weights'] = sector_weights
+
+	return HttpResponse(json.dumps(response_data), status=200,
+		content_type='application/json')
+
+
+############# utils ###########
+def parse_by_symbol(symbol):
+	'''
+	@return,
+	'''
