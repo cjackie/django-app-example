@@ -13,7 +13,7 @@ python manage.py startapp app
 
 
 # to create db from models
-python manage,py makeimgrations  # needed if models.py are modified.
+python manage,py makemigrations  # needed if models.py are modified.
 python manage.py migrate         # create db tables
 
 
