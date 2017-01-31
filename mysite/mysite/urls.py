@@ -17,12 +17,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 
-from . import view, settings
+from . import settings
 import eft
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-	url(r'^eft/', include('eft.urls'))
+	url(r'^', include('eft.urls'))
 ] + static(settings.STATIC_URL, 
 	document_root=settings.STATIC_ROOT) # only for dev only..
