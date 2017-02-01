@@ -91,31 +91,82 @@ def history(request):
 
 ### ajax apis #######
 @login_required
+def _history(request):
+	if not request.is_ajax():
+		return HttpResponse(json.dumps({'error': 'bad header'}), status=404,
+								content_type='application/json')
+
+	user = request.user
+	response_data = {
+		'records': [],
+	}
+	for record in etf_models.EtfRecord.objects.filter(user_id=user.id):
+		r = {}
+		r['symbol'] = record.symbol
+		r['etf_name'] = record.etf_name
+		r['fund_description'] = record.fund_description
+		response_data['records'].append(r)
+	return HttpResponse(json.dumps(response_data), status=200, content_type='application/json')
+
+@login_required
 def _search(request):
 	'''
 	data format example: {'symbol': 'DTS'}
 	'''
+	user = request.user
 	if 'GET' != request.method or not request.is_ajax():
 		return HttpResponse(json.dumps({'error': 'bad header'}), status=404,
-		content_type='application/json')
+								content_type='application/json')
 
+	record = None
 	try :
 		# TODO validate the data, 
 		symbol = request.GET['symbol']
+		# getting from db if possible
 		data = etf_models.EtfRecord.objects.filter(symbol=symbol)
 		if (len(data) > 0):
-			# no need to query again.
+			# no need to query again, it is in the db.
 			record = data[0]
-		else:
-			etf_data = parse_by_symbol(symbol)
-			# TODO save it to db
-			return HttpResponse(json.dumps(etf_data), status=200,
-				content_type='application/json')
-
-			raise Exception('parse from web is not implemented yet.')
 	except Exception as error:
-		return HttpResponse(json.dumps({'error': str(error)}), 
-			content_type='application/json', status=400)
+		error_msg = {
+			'error': str(error),
+			'user_msg': 'Server encountered an error'
+		}
+		return HttpResponse(json.dumps(error_msg), content_type='application/json', status=400)
+
+	try:
+		if (None == record): 
+			# need to parse from the website
+			etf_data = parse_by_symbol(symbol)
+			# save it to db
+			record = etf_models.EtfRecord.objects.create(user=user, symbol=etf_data['symbol'], 
+															etf_name=etf_data['etf_name'], 
+															fund_description=etf_data['fund_description'])
+			record.save()
+			for holding in etf_data['top_10_holdings']:
+				h = etf_models.Holding.objects.create(record=record, name=holding['name'], 
+														weight=holding['weight'], shares=holding['shares'])
+				h.save()
+			for country_weight in etf_data['country_weights']:
+				cw = etf_models.CountryWeights.objects.create(record=record, country=country_weight['country'],
+																weight=country_weight['weight'])
+				cw.save()
+			for sector_weight in etf_data['sector_weights']:
+				sw = etf_models.SectorWeights.objects.create(record=record, sector=sector_weight['sector'],
+																weight=sector_weight['weight'])
+				sw.save()
+	except Exception as error:
+		# undo possible changes to db
+		data = etf_models.EtfRecord.objects.filter(symbol=symbol)
+		if (len(data) > 0):
+			record = data[0]
+			record.delete()
+		error_msg = {
+			'error': str(error),
+			'user_msg': 'invalid symbol'
+		}
+		# raise error # for debug
+		return HttpResponse(json.dumps(error_msg), content_type='application/json', status=400)
 
 	# construct response
 	response_data = {}

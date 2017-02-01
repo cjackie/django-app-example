@@ -13,4 +13,5 @@ urlpatterns = [
 
     # ajax
     url(r'^api/search$', views._search, name='api_search'),
+    url(r'^api/history$', views._history, name='api_history'),
 ]

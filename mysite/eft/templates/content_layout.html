@@ -3,13 +3,13 @@
 {% load static %}
 
 {% block content %}
-<div class="col-md-9">
+<div class="col-md-12">
 	<div class="navbar navbar-default">
     	<div class="container-fluid">
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul class="nav navbar-nav">
-                	<li id="searchTab"><a href="eft/search">Search</a></li>
-                    <li id="historyTab"><a href="eft/history">History</a></li>
+                	<li id="searchTab"><a href="search">Search</a></li>
+                    <li id="historyTab"><a href="history">History</a></li>
                 </ul>
                  
                 <ul class="nav navbar-nav navbar-right">
@@ -21,6 +21,30 @@
     {% block content_2 %}
 
     {% endblock %}
+
+    <div id="messageModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Message</h4>
+          </div>
+          <div id="messageModalContent" class="modal-body">
+            <p>One fine body&hellip;</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script type="text/javascript"> 
+    function showMessage(msg) {
+        $('#messageModalContent').html(msg);
+        $('#messageModal').modal('show');
+    }
+    </script>
+
 </div>
 {% endblock %}
 

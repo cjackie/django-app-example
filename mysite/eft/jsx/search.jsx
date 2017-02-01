@@ -38,12 +38,16 @@ class Search extends React.Component {
 					'etf': etf,
 				});
 			} else if (jqxhr.status == 400) {
-				showMessage('fail1');
+				if (undefined != data && undefined != data['user_msg']) {
+					showMessage(data['user_msg']);
+				} else {
+					showMessage('unknown error');
+				}
 				this.setState({
 					'currentSymbol': '',
 				});
 			} else {
-				showMessage('fail2');
+				showMessage('server encountered an error');
 				this.setState({
 					'currentSymbol': '',
 				});
@@ -175,11 +179,6 @@ class Search extends React.Component {
     		</div>
     		);
   	}
-}
-
-function showMessage(msg) {
-	$('#messageModalContent').html(msg);
-	$('#messageModal').modal('show');
 }
 
 ReactDOM.render(
