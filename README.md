@@ -4,10 +4,12 @@ saerch and dispaly ETF(Exchange-Traded Fund).
 ## Pre-requisites
 - python 2.7.0+
 - django 1.10.0+
+- BeautifulSoup 4.5.3+
 instructions in Ubuntu
 ```shell
 sudo apt-get python-pip
-sudo apt-get django
+sudo pip install django
+sudo pip install beautifulsoup4
 ```
 
 ## Installation
