@@ -6,7 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from apps import EftConfig
 from . import models as etf_models
+
 import json
+from parser import parse_by_symbol
 
 def index(request):
 	return render(request, 'index.html', {})
@@ -105,9 +107,10 @@ def _search(request):
 			# no need to query again.
 			record = data[0]
 		else:
-			# TODO
-			# parse info from the web
-			record = None
+			etf_data = parse_by_symbol(symbol)
+			# TODO save it to db
+			return HttpResponse(json.dumps(etf_data), status=200,
+				content_type='application/json')
 
 			raise Exception('parse from web is not implemented yet.')
 	except Exception as error:
@@ -149,9 +152,3 @@ def _search(request):
 	return HttpResponse(json.dumps(response_data), status=200,
 		content_type='application/json')
 
-
-############# utils ###########
-def parse_by_symbol(symbol):
-	'''
-	@return,
-	'''

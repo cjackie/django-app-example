@@ -1,63 +1,4 @@
-// dummy data
-dummyData = {
-	'top_10_holdings': [{
-		'name': 'Anglo American plc',
-		'weight': 0.95,
-		'shares': 46478
-	}, {
-		'name': 'Anglo American plc',
-		'weight': 0.95,
-		'shares': 46478
-	}, {
-		'name': 'Anglo American plc',
-		'weight': 0.95,
-		'shares': 46478
-	}, {
-		'name': 'Anglo American plc',
-		'weight': 0.95,
-		'shares': 46478
-	}, {
-		'name': 'Anglo American plc',
-		'weight': 0.95,
-		'shares': 46478
-	}, {
-		'name': 'Anglo American plc',
-		'weight': 0.95,
-		'shares': 46478
-	}, {
-		'name': 'Anglo American plc',
-		'weight': 0.95,
-		'shares': 46478
-	}, {
-		'name': 'Anglo American plc',
-		'weight': 0.95,
-		'shares': 46478
-	}, {
-		'name': 'Anglo American plc',
-		'weight': 0.95,
-		'shares': 46478
-	}, {
-		'name': 'Anglo American plc',
-		'weight': 0.95,
-		'shares': 46478
-	}],
-	'country_weights': [{
-		'country': 'Japan',
-		'weight': 50
-	}, {
-		'country': 'USA',
-		'weight': 50
-	}],
-	'sector_weights': [{
-		'sector': 'Financials',
-		'weight': 20
-	}, {
-		'sector': 'Industrials',
-		'weight': 80
-	}],
-	'fund_description': 'this is dummy data',
-	'etf_name': 'Global Dow'
-};
+
 
 class Search extends React.Component {
 	constructor(props) {
@@ -70,7 +11,7 @@ class Search extends React.Component {
 	}
 
 	search() {
-		var symbol = this.state['searchText'];
+		var symbol = this.state['searchText'].trim();
 		var etf = this.state['etf'];
 
 		if (_.has(etf, symbol)) {
