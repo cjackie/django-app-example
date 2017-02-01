@@ -22,7 +22,7 @@ import eft
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-
-	url(r'^', include('eft.urls'))
+    
+	url(r'^eft/', include('eft.urls'))
 ] + static(settings.STATIC_URL, 
 	document_root=settings.STATIC_ROOT) # only for dev only..

@@ -22,3 +22,4 @@ cd [to django-app-example]
 cd mysite
 python manage.py runserver
 ```
+then open up a browser and go to http://127.0.0.1:8000/eft/search
