@@ -17,6 +17,15 @@ sudo pip install beautifulsoup4
 cd [path_to_store]
 git clone https://github.com/cjackie/django-app-example.git
 ```
+configure static directions if needed, by changing ```STATIC_ROOT``` in the ```setting.py```. Then run
+```shell
+python manage.py collectstatic  
+```
+database related
+```shell
+python manage.py makemigrations
+python manage.py migrate
+```
 
 ## Run Local Development Site
 ```shell
