@@ -135,3 +135,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'eft/static/'),
     os.path.join(BASE_DIR, 'static/')
 ]
+
+# where static files will be collected and save into
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_state_files')
