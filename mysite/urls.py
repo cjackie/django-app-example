@@ -17,12 +17,18 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 
+from django.shortcuts import redirect
+
 from . import settings
 import eft
+
+def redirect_to_eft(request):
+    return redirect('/eft/')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     
+    url(r'^$', redirect_to_eft),
 	url(r'^eft/', include('eft.urls'))
 ] + static(settings.STATIC_URL, 
 	document_root=settings.STATIC_ROOT) # only for dev only..
