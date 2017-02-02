@@ -25,3 +25,10 @@ cd mysite
 python manage.py runserver
 ```
 then open up a browser and go to http://127.0.0.1:8000/eft/search
+
+
+## dummy user
+```
+useranme: test<br>
+password: test
+```

@@ -1,4 +1,99 @@
+var localColorSet = ['#B284BE', '#7CB9E8', '#F2F0E6', '#84DE02', '#C46210',
+						'#FFBF00', '#FFBF00', '#008000', '#4B5320', '#87A96B',
+						'#B2BEB5', '#E9D66B', '#007FFF', '#21ABCD', '#3D2B1F',
+						'#000000', '#0018A8', '#ACE5EE', '#006A4E', '#D891EF',
+						'#AF6E4D', '#F0DC82', '#536872', '#EFBBCC', '#FFA700'];
+function makeTopTenHoldingsChart(id, records) {
+	window.records = records;
 
+	var data = {};
+	data['labels'] = [];
+	data['datasets'] = [];
+	data['datasets'].push({
+		'label': 'Top 10 Holdings',
+		'backgroundColor': [],
+		'data': []
+	});
+	for (var i = 0; i < records.length && i < localColorSet.length; i++) {
+		var record = records[i];
+		data['labels'].push(record['name']);
+		data['datasets'][0]['backgroundColor'].push(localColorSet[i]);
+		data['datasets'][0]['data'].push(record['shares']);
+	}
+
+	var options = {};
+	var config = {
+		'type': 'bar',
+		'data': data,
+		'options': options
+	};
+
+	var barChart = new Chart(document.getElementById(id), config);
+}
+
+function makeCountryWeightsPieChart(id, countryWeights) {
+	if (countryWeights.length == 0) {
+		return ;
+	}
+
+	var labels = []
+	var dataset = {
+		'data': [],
+		'backgroundColor': [],
+	}
+	for (var i = 0; i < countryWeights.length && i < localColorSet.length; i++) {
+		var countryWeight = countryWeights[i];
+		labels.push(countryWeight['country']);
+		dataset['data'].push(countryWeight['weight']);
+		dataset['backgroundColor'].push(localColorSet[i]);
+	}
+	var data = {
+		'labels': labels,
+		'datasets': [
+			dataset,
+		]
+	}
+	var options = {};
+	var config = {
+		'type': 'pie',
+		'data': data,
+		'options': options
+	};
+
+	var pieChart = new Chart(document.getElementById(id), config); 
+}
+
+function makeSectorWeightsPieChart(id, sectorWeights) {
+	if (sectorWeights.length == 0) {
+		return ;
+	}
+	
+	var labels = []
+	var dataset = {
+		'data': [],
+		'backgroundColor': [],
+	}
+	for (var i = 0; i < sectorWeights.length && i < localColorSet.length; i++) {
+		var sectorWeight = sectorWeights[i];
+		labels.push(sectorWeight['sector']);
+		dataset['data'].push(sectorWeight['weight']);
+		dataset['backgroundColor'].push(localColorSet[i]);
+	}
+	var data = {
+		'labels': labels,
+		'datasets': [
+			dataset,
+		]
+	}
+	var options = {};
+	var config = {
+		'type': 'pie',
+		'data': data,
+		'options': options
+	};
+
+	var pieChart = new Chart(document.getElementById(id), config); 
+}
 
 class Search extends React.Component {
 	constructor(props) {
@@ -9,6 +104,18 @@ class Search extends React.Component {
 			'searchText': '',
 		};
 
+	}
+
+	componentDidUpdate() {
+		// add graphs
+		var currentSymbol = this.state['currentSymbol'];
+		var etf = this.state['etf'];
+		if (currentSymbol != '' && _.has(etf, currentSymbol)) {
+			var etfData = etf[currentSymbol]
+			makeTopTenHoldingsChart('topTenHoldingsChart', etfData['top_10_holdings']);
+			makeCountryWeightsPieChart('countryWeightsPieChart', etfData['country_weights']);
+			makeSectorWeightsPieChart('sectorWeightsPieChart', etfData['sector_weights']);
+		}
 	}
 
 	search() {
@@ -104,6 +211,9 @@ class Search extends React.Component {
 							<tr><td> Name </td> <td> weight </td> <td> shares </td></tr>
 							{ topTenHoldingsViewRow }
 						</table>
+						<div className='col-md-8 block-center'>
+							<canvas id="topTenHoldingsChart"></canvas>
+						</div>
 					</div>
 				</div>
 				);
@@ -127,6 +237,9 @@ class Search extends React.Component {
 							<tr><td> Country </td> <td> Weight </td> </tr>
 							{ countriesWeightViewRow }
 						</table>
+						<div className='col-md-8 block-center'>
+							<canvas id="countryWeightsPieChart"></canvas>
+						</div>
 					</div>
 				</div>
 				);
@@ -150,6 +263,9 @@ class Search extends React.Component {
 							<tr><td> Sector </td> <td> Weight </td> </tr>
 							{ sectorsWeightViewRow }
 						</table>
+						<div className='col-md-8 block-center'>
+							<canvas id="sectorWeightsPieChart"></canvas>
+						</div>
 					</div>
 				</div>
 				);
@@ -169,6 +285,7 @@ class Search extends React.Component {
     		<div className='col-md-12'>
 	    		<div className='container-fluid'>
 	    			<div className='form-group is-empty'>
+	    				<label> ETF Ticker </label>
 	                    <input type='text' className='form-control col-md-8'
 	                    		value={this.state['searchText']}
 	                    		onChange={this.searchTextChanged.bind(this)}/>
