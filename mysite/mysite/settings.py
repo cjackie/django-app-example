@@ -137,4 +137,4 @@ STATICFILES_DIRS = [
 ]
 
 # where static files will be collected and save into
-STATIC_ROOT = '/home/chaojie/Tmp/static/' 
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_state_files')

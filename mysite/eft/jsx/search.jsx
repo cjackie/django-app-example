@@ -204,7 +204,12 @@ class Search extends React.Component {
 			var topTenHoldingsView = (
 				<div className='panel panel-default'>
 					<div className='panel-heading'>
-						<h3> Top 10 Holdings </h3>
+						<h3> Top 10 Holdings 
+							<a className='pull-right'
+								href={'download/top10holdings/'+currentSymbol} target='blank'>
+								Download
+							</a>
+						</h3> 
 					</div>
 					<div className='panel-body'>
 						<table className='table'>
@@ -229,8 +234,13 @@ class Search extends React.Component {
 			});
 			var countriesWeightView = (
 				<div className='panel panel-default'>
-					<div className='panel-heading'>
-						<h3> Country Weight </h3>
+					<div className='panel-heading '>
+						<h3> Country Weight 
+							<a className='pull-right'
+								href={'download/countryweights/'+currentSymbol} target='blank'>
+								Download
+							</a>
+						</h3>
 					</div>
 					<div className='panel-body'>
 						<table className='table'>
@@ -256,7 +266,12 @@ class Search extends React.Component {
 			var sectorWeightView = (
 				<div className='panel panel-default'>
 					<div className='panel-heading'>
-						<h3> Sector Weight </h3>
+						<h3> Sector Weight
+							<a className='pull-right'
+								href={'download/sectorweights/'+currentSymbol} target='blank'>
+								Download
+							</a>
+						</h3>
 					</div>
 					<div className='panel-body'>
 						<table className='table'>

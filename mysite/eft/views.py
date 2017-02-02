@@ -203,3 +203,34 @@ def _search(request):
 	return HttpResponse(json.dumps(response_data), status=200,
 		content_type='application/json')
 
+@login_required
+def download(request, table, symbol):
+	user = request.user
+	records = etf_models.EtfRecord.objects.filter(symbol=symbol)
+	if len(records) < 1:
+		return HttpResponse(status=404)
+	record = records[0]
+
+	if 'top10holdings' == table:
+		csv_data = 'name,weight,shares\n'
+		for holding in record.holding_set.all():
+			csv_data += '{0},{1},{2}\n'.format(holding.name, holding.weight, holding.shares)
+		response = HttpResponse(csv_data)
+		response['Content-Disposition'] = 'attachment;filename="holdings.csv"'
+		return response
+	elif 'countryweights' == table:
+		csv_data = 'country,weight\n'
+		for cw in record.countryweights_set.all():
+			csv_data += '{0},{1}\n'.format(cw.country, str(cw.weight)+'%')
+		response = HttpResponse(csv_data)
+		response['Content-Disposition'] = 'attachment;filename="country weight.csv"'
+		return response
+	elif 'sectorweights' == table:
+		csv_data = 'sector,weight\n'
+		for sw in record.sectorweights_set.all():
+			csv_data += '{0},{1}\n'.format(sw.sector, str(sw.weight)+'%')
+		response = HttpResponse(csv_data)
+		response['Content-Disposition'] = 'attachment;filename="sector weight.csv"'
+		return response
+	else:
+		return HttpResponse(status=404)

@@ -226,7 +226,13 @@ class Search extends React.Component {
 					React.createElement(
 						'h3',
 						null,
-						' Top 10 Holdings '
+						' Top 10 Holdings',
+						React.createElement(
+							'a',
+							{ className: 'pull-right',
+								href: 'download/top10holdings/' + currentSymbol, target: 'blank' },
+							'Download'
+						)
 					)
 				),
 				React.createElement(
@@ -289,11 +295,17 @@ class Search extends React.Component {
 				{ className: 'panel panel-default' },
 				React.createElement(
 					'div',
-					{ className: 'panel-heading' },
+					{ className: 'panel-heading ' },
 					React.createElement(
 						'h3',
 						null,
-						' Country Weight '
+						' Country Weight',
+						React.createElement(
+							'a',
+							{ className: 'pull-right',
+								href: 'download/countryweights/' + currentSymbol, target: 'blank' },
+							'Download'
+						)
 					)
 				),
 				React.createElement(
@@ -355,7 +367,13 @@ class Search extends React.Component {
 					React.createElement(
 						'h3',
 						null,
-						' Sector Weight '
+						' Sector Weight',
+						React.createElement(
+							'a',
+							{ className: 'pull-right',
+								href: 'download/sectorweights/' + currentSymbol, target: 'blank' },
+							'Download'
+						)
 					)
 				),
 				React.createElement(

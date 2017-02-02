@@ -14,4 +14,7 @@ urlpatterns = [
     # ajax
     url(r'^api/search$', views._search, name='api_search'),
     url(r'^api/history$', views._history, name='api_history'),
+
+    # download
+    url(r'download/(?P<table>[0-9a-zA-Z]{,100})/(?P<symbol>[a-zA-Z]{,15})', views.download)
 ]
