@@ -196,8 +196,8 @@ class Search extends React.Component {
 				return (
 					<tr>
 						<td>{holding['name']}</td>
-						<td>{holding['weight']}</td>
-						<td>{holding['shares']}</td>
+						<td>{numeral(holding['weight']).format('0,0.00')}</td>
+						<td>{numeral(holding['shares']).format('0,0')}</td>
 					</tr>
 					)
 			});
@@ -212,12 +212,17 @@ class Search extends React.Component {
 						</h3> 
 					</div>
 					<div className='panel-body'>
-						<table className='table'>
-							<tr><td> Name </td> <td> weight </td> <td> shares </td></tr>
-							{ topTenHoldingsViewRow }
-						</table>
-						<div className='col-md-8 block-center'>
-							<canvas id="topTenHoldingsChart"></canvas>
+						<div className='container-fluid'>
+							<div className='col-md-4'>
+								<table className='table'>
+									<tr><td> <b>Name</b> </td> <td> <b>Weight</b> </td> <td> <b>shares</b> </td></tr>
+									{ topTenHoldingsViewRow }
+								</table>
+							</div>
+
+							<div className='col-md-8'>
+								<canvas id="topTenHoldingsChart"></canvas>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -228,7 +233,7 @@ class Search extends React.Component {
 				return (
 					<tr>
 						<td>{weight['country']}</td>
-						<td>{weight['weight']}%</td>
+						<td>{numeral(weight['weight']).format('0,0.00')}%</td>
 					</tr>
 					)
 			});
@@ -243,12 +248,17 @@ class Search extends React.Component {
 						</h3>
 					</div>
 					<div className='panel-body'>
-						<table className='table'>
-							<tr><td> Country </td> <td> Weight </td> </tr>
-							{ countriesWeightViewRow }
-						</table>
-						<div className='col-md-8 block-center'>
-							<canvas id="countryWeightsPieChart"></canvas>
+						<div className='container-fluid'>
+							<div className='col-md-6'>
+								<table className='table'>
+									<tr><td> <b>Country</b> </td> <td> <b>Weight</b> </td> </tr>
+									{ countriesWeightViewRow }
+								</table>
+							</div>
+
+							<div className='col-md-6'>
+								<canvas id="countryWeightsPieChart"></canvas>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -259,7 +269,7 @@ class Search extends React.Component {
 				return (
 					<tr>
 						<td>{weight['sector']}</td>
-						<td>{weight['weight']}%</td>
+						<td>{numeral(weight['weight']).format('0,0.00')}%</td>
 					</tr>
 					)
 			});
@@ -274,13 +284,19 @@ class Search extends React.Component {
 						</h3>
 					</div>
 					<div className='panel-body'>
-						<table className='table'>
-							<tr><td> Sector </td> <td> Weight </td> </tr>
-							{ sectorsWeightViewRow }
-						</table>
-						<div className='col-md-8 block-center'>
-							<canvas id="sectorWeightsPieChart"></canvas>
+
+						<div className='container-fluid'>
+							<div className='col-md-6'>
+								<table className='table'>
+									<tr><td> <b>Sector</b> </td> <td> <b>Weight</b> </td></tr>
+									{ sectorsWeightViewRow }
+								</table>
+							</div>
+							<div className='col-md-6'>
+								<canvas id="sectorWeightsPieChart"></canvas>
+							</div>
 						</div>
+						
 					</div>
 				</div>
 				);

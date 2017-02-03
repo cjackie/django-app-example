@@ -208,12 +208,12 @@ class Search extends React.Component {
 					React.createElement(
 						'td',
 						null,
-						holding['weight']
+						numeral(holding['weight']).format('0,0.00')
 					),
 					React.createElement(
 						'td',
 						null,
-						holding['shares']
+						numeral(holding['shares']).format('0,0')
 					)
 				);
 			});
@@ -239,35 +239,61 @@ class Search extends React.Component {
 					'div',
 					{ className: 'panel-body' },
 					React.createElement(
-						'table',
-						{ className: 'table' },
+						'div',
+						{ className: 'container-fluid' },
 						React.createElement(
-							'tr',
-							null,
+							'div',
+							{ className: 'col-md-4' },
 							React.createElement(
-								'td',
-								null,
-								' Name '
-							),
-							' ',
-							React.createElement(
-								'td',
-								null,
-								' weight '
-							),
-							' ',
-							React.createElement(
-								'td',
-								null,
-								' shares '
+								'table',
+								{ className: 'table' },
+								React.createElement(
+									'tr',
+									null,
+									React.createElement(
+										'td',
+										null,
+										' ',
+										React.createElement(
+											'b',
+											null,
+											'Name'
+										),
+										' '
+									),
+									' ',
+									React.createElement(
+										'td',
+										null,
+										' ',
+										React.createElement(
+											'b',
+											null,
+											'Weight'
+										),
+										' '
+									),
+									' ',
+									React.createElement(
+										'td',
+										null,
+										' ',
+										React.createElement(
+											'b',
+											null,
+											'shares'
+										),
+										' '
+									)
+								),
+								topTenHoldingsViewRow
 							)
 						),
-						topTenHoldingsViewRow
-					),
-					React.createElement(
-						'div',
-						{ className: 'col-md-8 block-center' },
-						React.createElement('canvas', { id: 'topTenHoldingsChart' })
+						React.createElement(
+							'div',
+							{ className: 'col-md-8' },
+							React.createElement('canvas', { id: 'topTenHoldingsChart' })
+						)
 					)
 				)
 			);
@@ -285,7 +311,7 @@ class Search extends React.Component {
 					React.createElement(
 						'td',
 						null,
-						weight['weight'],
+						numeral(weight['weight']).format('0,0.00'),
 						'%'
 					)
 				);
@@ -312,30 +338,50 @@ class Search extends React.Component {
 					'div',
 					{ className: 'panel-body' },
 					React.createElement(
-						'table',
-						{ className: 'table' },
-						React.createElement(
-							'tr',
-							null,
-							React.createElement(
-								'td',
-								null,
-								' Country '
-							),
-							' ',
-							React.createElement(
-								'td',
-								null,
-								' Weight '
-							),
-							' '
-						),
-						countriesWeightViewRow
-					),
-					React.createElement(
 						'div',
-						{ className: 'col-md-8 block-center' },
-						React.createElement('canvas', { id: 'countryWeightsPieChart' })
+						{ className: 'container-fluid' },
+						React.createElement(
+							'div',
+							{ className: 'col-md-6' },
+							React.createElement(
+								'table',
+								{ className: 'table' },
+								React.createElement(
+									'tr',
+									null,
+									React.createElement(
+										'td',
+										null,
+										' ',
+										React.createElement(
+											'b',
+											null,
+											'Country'
+										),
+										' '
+									),
+									' ',
+									React.createElement(
+										'td',
+										null,
+										' ',
+										React.createElement(
+											'b',
+											null,
+											'Weight'
+										),
+										' '
+									),
+									' '
+								),
+								countriesWeightViewRow
+							)
+						),
+						React.createElement(
+							'div',
+							{ className: 'col-md-6' },
+							React.createElement('canvas', { id: 'countryWeightsPieChart' })
+						)
 					)
 				)
 			);
@@ -353,7 +399,7 @@ class Search extends React.Component {
 					React.createElement(
 						'td',
 						null,
-						weight['weight'],
+						numeral(weight['weight']).format('0,0.00'),
 						'%'
 					)
 				);
@@ -380,30 +426,49 @@ class Search extends React.Component {
 					'div',
 					{ className: 'panel-body' },
 					React.createElement(
-						'table',
-						{ className: 'table' },
-						React.createElement(
-							'tr',
-							null,
-							React.createElement(
-								'td',
-								null,
-								' Sector '
-							),
-							' ',
-							React.createElement(
-								'td',
-								null,
-								' Weight '
-							),
-							' '
-						),
-						sectorsWeightViewRow
-					),
-					React.createElement(
 						'div',
-						{ className: 'col-md-8 block-center' },
-						React.createElement('canvas', { id: 'sectorWeightsPieChart' })
+						{ className: 'container-fluid' },
+						React.createElement(
+							'div',
+							{ className: 'col-md-6' },
+							React.createElement(
+								'table',
+								{ className: 'table' },
+								React.createElement(
+									'tr',
+									null,
+									React.createElement(
+										'td',
+										null,
+										' ',
+										React.createElement(
+											'b',
+											null,
+											'Sector'
+										),
+										' '
+									),
+									' ',
+									React.createElement(
+										'td',
+										null,
+										' ',
+										React.createElement(
+											'b',
+											null,
+											'Weight'
+										),
+										' '
+									)
+								),
+								sectorsWeightViewRow
+							)
+						),
+						React.createElement(
+							'div',
+							{ className: 'col-md-6' },
+							React.createElement('canvas', { id: 'sectorWeightsPieChart' })
+						)
 					)
 				)
 			);
